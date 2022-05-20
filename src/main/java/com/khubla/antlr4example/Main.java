@@ -23,8 +23,8 @@ class Main {
 
    public static void main(String[] args) {
       try {
-         String inputFile = "example.asp2";
-         String outputFile = "1.json";
+         String inputFile = "example.asp";
+         String outputFile = "asp.json";
 
          if (args.length == 2) {
             inputFile = args[0];
