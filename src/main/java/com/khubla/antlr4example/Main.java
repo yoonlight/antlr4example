@@ -2,6 +2,8 @@ package com.khubla.antlr4example;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 
 import org.antlr.v4.runtime.CharStreams;
@@ -23,10 +25,18 @@ class Main {
       System.out.println("Antlr4 Example");
 
       try {
+         String inputFile = "example.asp2";
+         String outputFile = "1.json";
+
+         if (args.length == 2) {
+            inputFile = args[0];
+            outputFile = args[1];
+         }
          /*
           * get the input file as an InputStream
           */
-         InputStream inputStream = Main.class.getResourceAsStream("/example1.txt");
+         File readFile = new File(inputFile);
+         InputStream inputStream = new FileInputStream(readFile);
          /*
           * make Lexer
           */
@@ -44,9 +54,10 @@ class Main {
           */
          // @SuppressWarnings("unused")
          HtmlDocumentContext HTMLContext = HTMLParser.htmlDocument();
-         FileWriter file = new FileWriter("employees.json");
-         file.write(toJson(HTMLContext));
-         file.flush();
+         try (FileWriter file = new FileWriter(outputFile)) {
+            file.write(Json.toJson(HTMLContext));
+            file.flush();
+         }
       } catch (IOException e) {
          e.printStackTrace();
       }
