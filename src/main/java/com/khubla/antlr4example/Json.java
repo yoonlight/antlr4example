@@ -11,9 +11,11 @@ import com.google.gson.GsonBuilder;
 public class Json {
     private static final Gson PRETTY_PRINT_GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final Gson GSON = new Gson();
+    public static List<Map<String, Object>> result = new ArrayList<>();
 
     public static String toJson(ParseTree tree) {
-        return toJson(tree, true);
+        toJson(tree, true);
+        return PRETTY_PRINT_GSON.toJson(result);
     }
 
     public static String toJson(ParseTree tree, boolean prettyPrint) {
@@ -30,9 +32,10 @@ public class Json {
 
         if (tree instanceof TerminalNodeImpl) {
             Token token = ((TerminalNodeImpl) tree).getSymbol();
+            map.put("type", token.getType());
+            map.put("text", token.getText());
             if (token.getType() == 6) {
-                map.put("type", token.getType());
-                map.put("text", token.getText());
+                addResult(token);
             }
         } else {
             List<Map<String, Object>> children = new ArrayList<>();
@@ -45,5 +48,12 @@ public class Json {
                 traverse(tree.getChild(i), nested);
             }
         }
+    }
+
+    public static void addResult(Token token) {
+        Map<String, Object> nested = new LinkedHashMap<>();
+        nested.put("type", token.getType());
+        nested.put("text", token.getText());
+        result.add(nested);
     }
 }
