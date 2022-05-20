@@ -34,7 +34,7 @@ public class Json {
             Token token = ((TerminalNodeImpl) tree).getSymbol();
             map.put("type", token.getType());
             map.put("text", token.getText());
-            if (token.getType() == 6) {
+            if (token.getType() == 6 || token.getType() == 18) {
                 addResult(token);
             }
         } else {
