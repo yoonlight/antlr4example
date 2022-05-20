@@ -22,8 +22,6 @@ import com.khubla.antlr4example.HTMLParser.HtmlDocumentContext;
 class Main {
 
    public static void main(String[] args) {
-      System.out.println("Antlr4 Example");
-
       try {
          String inputFile = "example.asp2";
          String outputFile = "1.json";
@@ -40,7 +38,7 @@ class Main {
          /*
           * make Lexer
           */
-         Lexer HTMLLexer =  new HTMLLexer(CharStreams.fromStream(inputStream));
+         Lexer HTMLLexer = new HTMLLexer(CharStreams.fromStream(inputStream));
          /*
           * get a TokenStream on the Lexer
           */
@@ -50,7 +48,8 @@ class Main {
           */
          HTMLParser HTMLParser = new HTMLParser(HTMLTokenStream);
          /*
-          * get the top node of the AST. This corresponds to the topmost rule of equation.q4, "equation"
+          * get the top node of the AST. This corresponds to the topmost rule of
+          * equation.q4, "equation"
           */
          // @SuppressWarnings("unused")
          HtmlDocumentContext HTMLContext = HTMLParser.htmlDocument();
