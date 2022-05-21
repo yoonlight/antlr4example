@@ -1,4 +1,4 @@
-package com.khubla.antlr4example;
+package com.khubla.antlr4example.json;
 
 import java.util.*;
 
@@ -8,7 +8,7 @@ import org.antlr.v4.runtime.tree.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class Json {
+public class HTMLJson {
     private static final Gson PRETTY_PRINT_GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final Gson GSON = new Gson();
     public static List<Map<String, Object>> result = new ArrayList<>();
@@ -52,7 +52,6 @@ public class Json {
 
     public static void addResult(Token token) {
         Map<String, Object> nested = new LinkedHashMap<>();
-        nested.put("type", token.getType());
         nested.put("text", token.getText());
         result.add(nested);
     }

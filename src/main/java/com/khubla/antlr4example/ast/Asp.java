@@ -3,10 +3,10 @@ package com.khubla.antlr4example.ast;
 import org.antlr.v4.runtime.*;
 import java.io.*;
 
-import com.khubla.antlr4example.Json;
 import com.khubla.antlr4example.VisualBasic6Lexer;
 import com.khubla.antlr4example.VisualBasic6Parser;
 import com.khubla.antlr4example.VisualBasic6Parser.StartRuleContext;
+import com.khubla.antlr4example.json.Json;
 
 /**
  * ASTPhp
