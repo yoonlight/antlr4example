@@ -1,4 +1,4 @@
-package com.khubla.antlr4example;
+package com.khubla.antlr4example.ast;
 
 import java.io.InputStream;
 
@@ -7,9 +7,12 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.TokenStream;
 
+import com.khubla.antlr4example.HTMLJson;
+import com.khubla.antlr4example.HTMLLexer;
+import com.khubla.antlr4example.HTMLParser;
 import com.khubla.antlr4example.HTMLParser.HtmlDocumentContext;
 
-public class ASTHTML {
+public class HTML {
     public static String parse(InputStream inputStream) {
         String result = "";
 

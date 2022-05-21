@@ -1,23 +1,26 @@
-package com.khubla.antlr4example;
+package com.khubla.antlr4example.ast;
 
 import org.antlr.v4.runtime.*;
 import java.io.*;
 
-import com.khubla.antlr4example.VisualBasic6Parser.StartRuleContext;
+import com.khubla.antlr4example.HTMLJson;
+import com.khubla.antlr4example.JavaLexer;
+import com.khubla.antlr4example.JavaParser;
+import com.khubla.antlr4example.JavaParser.CompilationUnitContext;
 
 /**
  * ASTPhp
  */
-public class ASTAsp {
+public class Jsp {
 
-    public String parse(InputStream inputStream, String outputFile) {
+    public static String parse(InputStream inputStream) {
         String result = "";
 
         try {
             /*
              * make Lexer
              */
-            Lexer lexer = new VisualBasic6Lexer(CharStreams.fromStream(inputStream));
+            Lexer lexer = new JavaLexer(CharStreams.fromStream(inputStream));
             /*
              * get a TokenStream on the Lexer
              */
@@ -25,14 +28,15 @@ public class ASTAsp {
             /*
              * make a Parser on the token stream
              */
-            VisualBasic6Parser parser = new VisualBasic6Parser(tokenStream);
+            JavaParser parser = new JavaParser(tokenStream);
             /*
              * get the top node of the AST. This corresponds to the topmost rule of
              * equation.q4, "equation"
              */
-            StartRuleContext context = parser.startRule();
+            CompilationUnitContext context = parser.compilationUnit();
 
-            result = Json.toJson(context);
+            result = HTMLJson.toJson(context);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

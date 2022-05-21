@@ -2,6 +2,9 @@ package com.khubla.antlr4example;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import com.khubla.antlr4example.ast.HTML;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -26,7 +29,7 @@ class Main {
          File readFile = new File(inputFile);
 
          InputStream inputStream = new FileInputStream(readFile);
-         String result = ASTHTML.parse(inputStream);
+         String result = HTML.parse(inputStream);
 
          System.out.println(result);
 
