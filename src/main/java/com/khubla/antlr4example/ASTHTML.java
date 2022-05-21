@@ -33,7 +33,7 @@ public class ASTHTML {
 
             HtmlDocumentContext HTMLContext = HTMLParser.htmlDocument();
 
-            result = Json.toJson(HTMLContext);
+            result = HTMLJson.toJson(HTMLContext);
 
         } catch (Exception e) {
             e.fillInStackTrace();
