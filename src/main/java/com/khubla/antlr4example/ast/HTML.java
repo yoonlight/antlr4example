@@ -36,7 +36,7 @@ public class HTML {
 
             HtmlDocumentContext HTMLContext = HTMLParser.htmlDocument();
 
-            result = HTMLJson.toJson(HTMLContext);
+            result = HTMLJson.filterScript(HTMLContext);
 
         } catch (Exception e) {
             e.fillInStackTrace();

@@ -12,6 +12,12 @@ public class HTMLJson {
     private static final Gson PRETTY_PRINT_GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final Gson GSON = new Gson();
     public static List<Map<String, Object>> result = new ArrayList<>();
+    public static List<String> scriptList = new ArrayList<>();
+
+    public static String filterScript(ParseTree tree) {
+        toJson(tree, true);
+        return String.join("\n", scriptList);
+    }
 
     public static String toJson(ParseTree tree) {
         toJson(tree, true);
@@ -35,6 +41,7 @@ public class HTMLJson {
             map.put("type", token.getType());
             map.put("text", token.getText());
             if (token.getType() == 6 || token.getType() == 18) {
+                scriptList.add(token.getText());
                 addResult(token);
             }
         } else {
