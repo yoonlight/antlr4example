@@ -7,5 +7,11 @@ A quick Antlr4 Java example.
 ## Command
 
 ```shell
-java -cp antlr4example-1.0-SNAPSHOT.jar com.khubla.antlr4example.Main inputFile outputFile
+java -cp antlr4example-1.0-SNAPSHOT.jar com.khubla.antlr4example.Main -i inputFile -wo outputFile
+```
+
+- build
+
+```shell
+mvn package
 ```
