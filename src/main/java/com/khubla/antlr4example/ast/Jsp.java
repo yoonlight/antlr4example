@@ -6,7 +6,7 @@ import java.io.*;
 import com.khubla.antlr4example.JavaLexer;
 import com.khubla.antlr4example.JavaParser;
 import com.khubla.antlr4example.JavaParser.CompilationUnitContext;
-import com.khubla.antlr4example.json.HTMLJson;
+import com.khubla.antlr4example.json.Json;
 
 /**
  * ASTPhp
@@ -35,7 +35,7 @@ public class Jsp {
              */
             CompilationUnitContext context = parser.compilationUnit();
 
-            result = HTMLJson.toJson(context);
+            result = Json.toJson(context);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -6,7 +6,7 @@ import java.io.*;
 import com.khubla.antlr4example.PhpLexer;
 import com.khubla.antlr4example.PhpParser;
 import com.khubla.antlr4example.PhpParser.HtmlDocumentContext;
-import com.khubla.antlr4example.json.HTMLJson;
+import com.khubla.antlr4example.json.Json;
 
 /**
  * ASTPhp
@@ -35,7 +35,7 @@ public class Php {
              */
             HtmlDocumentContext context = parser.htmlDocument();
 
-            result = HTMLJson.toJson(context);
+            result = Json.toJson(context);
 
         } catch (Exception e) {
             e.printStackTrace();

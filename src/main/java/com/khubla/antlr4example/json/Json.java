@@ -14,8 +14,7 @@ public class Json {
     public static List<Map<String, Object>> result = new ArrayList<>();
 
     public static String toJson(ParseTree tree) {
-        toJson(tree, true);
-        return PRETTY_PRINT_GSON.toJson(result);
+        return toJson(tree, true);
     }
 
     public static String toJson(ParseTree tree, boolean prettyPrint) {
@@ -34,9 +33,6 @@ public class Json {
             Token token = ((TerminalNodeImpl) tree).getSymbol();
             map.put("type", token.getType());
             map.put("text", token.getText());
-            if (token.getType() == 6 || token.getType() == 18) {
-                addResult(token);
-            }
         } else {
             List<Map<String, Object>> children = new ArrayList<>();
             String name = tree.getClass().getSimpleName().replaceAll("Context$", "");
@@ -50,10 +46,4 @@ public class Json {
         }
     }
 
-    public static void addResult(Token token) {
-        Map<String, Object> nested = new LinkedHashMap<>();
-        nested.put("type", token.getType());
-        nested.put("text", token.getText());
-        result.add(nested);
-    }
 }
