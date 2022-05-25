@@ -40,7 +40,6 @@ class Main implements Runnable {
 
    @Override
    public void run() {
-      System.out.println("ANTLR Parser Command Line Interface");
       try {
 
          /*
