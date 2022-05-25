@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import com.khubla.antlr4example.ast.HTML;
+import com.khubla.antlr4example.ast.Php;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -12,6 +13,10 @@ import picocli.CommandLine.Option;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
+
+enum Lang {
+   java, html, php, asp
+}
 
 /**
  * @author Tom Everett
@@ -26,6 +31,8 @@ class Main implements Runnable {
    private static boolean printString;
    @Option(names = { "-w", "--write" })
    private static boolean writeString;
+   @Option(names = { "-l", "--lang" }, required = true)
+   private static Lang lang;
 
    public static void main(String[] args) {
       CommandLine.run(new Main(), args);
@@ -42,7 +49,14 @@ class Main implements Runnable {
          File readFile = new File(inputFile);
 
          InputStream inputStream = new FileInputStream(readFile);
-         String result = HTML.parse(inputStream);
+         String result = "";
+
+         if (lang == Lang.html) {
+            result = HTML.parse(inputStream);
+         } else if (lang == Lang.php) {
+            result = Php.parse(inputStream);
+         }
+
          if (printString) {
             System.out.println(result);
          }
