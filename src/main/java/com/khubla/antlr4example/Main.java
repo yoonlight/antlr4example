@@ -29,7 +29,11 @@ class Main implements Runnable {
 
    public static void main(String[] args) {
       CommandLine.run(new Main(), args);
+   }
 
+   @Override
+   public void run() {
+      System.out.println("ANTLR Parser Command Line Interface");
       try {
 
          /*
@@ -53,12 +57,6 @@ class Main implements Runnable {
       } catch (IOException e) {
          e.printStackTrace();
       }
-   }
-
-   @Override
-   public void run() {
-
-      System.out.println("ANTLR Command Line Interface");
    }
 
 }
