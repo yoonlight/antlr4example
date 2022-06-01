@@ -59,17 +59,21 @@ class Main implements Runnable {
          if (printString) {
             System.out.println(result);
          }
-         if (writeString) {
 
-            try (FileWriter file = new FileWriter(outputFile)) {
-               file.write(result);
-               file.flush();
-            }
+         if (writeString) {
+            writeFile(outputFile, result);
          }
 
       } catch (IOException e) {
          e.printStackTrace();
       }
+   }
+
+   public static void writeFile(String outputFile, String result) throws IOException {
+      FileWriter file = new FileWriter(outputFile);
+      file.write(result);
+      file.flush();
+      file.close();
    }
 
 }
