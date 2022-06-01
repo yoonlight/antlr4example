@@ -13,14 +13,16 @@ import com.khubla.antlr4example.json.Json;
  */
 public class Jsp {
 
-    public static String parse(InputStream inputStream) {
+    public static String parse(String code) throws Exception {
         String result = "";
-
+        System.out.println(CharStreams.fromString(code));
         try {
             /*
              * make Lexer
              */
-            Lexer lexer = new JavaLexer(CharStreams.fromStream(inputStream));
+            Lexer lexer = new JavaLexer(CharStreams.fromString(code));
+
+            System.out.println(lexer);
             /*
              * get a TokenStream on the Lexer
              */
@@ -33,9 +35,17 @@ public class Jsp {
              * get the top node of the AST. This corresponds to the topmost rule of
              * equation.q4, "equation"
              */
-            CompilationUnitContext context = parser.compilationUnit();
-
-            result = Json.toJson(context);
+            try {
+                
+                CompilationUnitContext context = parser.compilationUnit();
+    
+                result = Json.toJson(context);
+    
+                System.out.println(result);
+            } catch (RecognitionException e) {
+                //TODO: handle exception
+                e.printStackTrace();
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

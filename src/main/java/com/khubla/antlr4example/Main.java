@@ -5,6 +5,7 @@ import java.io.InputStream;
 
 import com.khubla.antlr4example.ast.HTML;
 import com.khubla.antlr4example.ast.Php;
+import com.khubla.antlr4example.java.Parser;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -71,6 +72,13 @@ class Main implements Runnable {
          result = HTML.parse(inputStream);
       } else if (lang == Lang.php) {
          result = Php.parse(inputStream);
+      } else if (lang == Lang.java) {
+         try {
+            result = Parser.parseFileWithRetries(inputStream);
+         } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
       }
 
       return result;
