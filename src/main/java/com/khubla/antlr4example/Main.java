@@ -48,13 +48,8 @@ class Main implements Runnable {
          File readFile = new File(inputFile);
 
          InputStream inputStream = new FileInputStream(readFile);
-         String result = "";
 
-         if (lang == Lang.html) {
-            result = HTML.parse(inputStream);
-         } else if (lang == Lang.php) {
-            result = Php.parse(inputStream);
-         }
+         String result = parse(inputStream);
 
          if (printString) {
             System.out.println(result);
@@ -67,6 +62,18 @@ class Main implements Runnable {
       } catch (IOException e) {
          e.printStackTrace();
       }
+   }
+
+   public static String parse(InputStream inputStream) {
+      String result = "";
+
+      if (lang == Lang.html) {
+         result = HTML.parse(inputStream);
+      } else if (lang == Lang.php) {
+         result = Php.parse(inputStream);
+      }
+
+      return result;
    }
 
    public static void writeFile(String outputFile, String result) throws IOException {
