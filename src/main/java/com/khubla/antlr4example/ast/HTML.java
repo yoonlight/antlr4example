@@ -11,6 +11,7 @@ import com.khubla.antlr4example.HTMLLexer;
 import com.khubla.antlr4example.HTMLParser;
 import com.khubla.antlr4example.HTMLParser.HtmlDocumentContext;
 import com.khubla.antlr4example.json.HTMLJson;
+import com.khubla.antlr4example.json.HTMLFilter;
 
 public class HTML {
     public static String parse(InputStream inputStream) {
@@ -36,7 +37,7 @@ public class HTML {
 
             HtmlDocumentContext HTMLContext = HTMLParser.htmlDocument();
 
-            result = HTMLJson.filterScript(HTMLContext);
+            result = HTMLFilter.filterScript(HTMLContext);
 
         } catch (Exception e) {
             e.fillInStackTrace();
