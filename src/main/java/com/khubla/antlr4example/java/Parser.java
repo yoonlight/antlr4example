@@ -10,8 +10,8 @@ import org.antlr.v4.runtime.CharStreams;
 public class Parser {
     final static String classPrefix = "public class Test {";
     final static String classSuffix = "}";
-    final static String methodPrefix = "SomeUnknownReturnType f() {";
-    final static String methodSuffix = "return noSuchReturnValue; }";
+    final static String methodPrefix = "void f() {";
+    final static String methodSuffix = "}";
 
     public static String parseFileWithRetries(InputStream inputStream) throws IOException {
         String originalContent = CharStreams.fromStream(inputStream).toString();
