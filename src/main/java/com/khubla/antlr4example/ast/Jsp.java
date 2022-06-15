@@ -22,7 +22,6 @@ public class Jsp {
              */
             Lexer lexer = new JavaLexer(CharStreams.fromString(code));
 
-            System.out.println(lexer);
             /*
              * get a TokenStream on the Lexer
              */
@@ -41,7 +40,7 @@ public class Jsp {
     
                 result = Json.toJson(context);
     
-                System.out.println(result);
+                // System.out.println(result);
             } catch (RecognitionException e) {
                 //TODO: handle exception
                 e.printStackTrace();

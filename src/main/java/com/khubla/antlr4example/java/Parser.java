@@ -15,30 +15,26 @@ public class Parser {
 
     public static String parseFileWithRetries(InputStream inputStream) throws IOException {
         String originalContent = CharStreams.fromStream(inputStream).toString();
-        // String content = originalContent;
         String content = classPrefix + methodPrefix + originalContent + methodSuffix + classSuffix;
 
-        System.out.println(content);
         String parsed = null;
         try {
             parsed = Jsp.parse(content);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
             try {
                 content = classPrefix + methodPrefix + originalContent + methodSuffix + classSuffix;
-                System.out.println(content);
                 parsed = Jsp.parse(content);
-                
+
             } catch (Exception e2) {
-                // TODO: handle exception
+
                 e2.printStackTrace();
                 content = classPrefix + originalContent + classSuffix;
-                System.out.println(content);
                 try {
                     parsed = Jsp.parse(content);
                 } catch (Exception e1) {
-                    // TODO Auto-generated catch block
+
                     e1.printStackTrace();
                 }
             }
