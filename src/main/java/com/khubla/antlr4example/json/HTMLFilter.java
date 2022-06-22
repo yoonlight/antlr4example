@@ -13,6 +13,7 @@ public class HTMLFilter {
     private static final Gson GSON = new Gson();
     public static List<Map<String, Object>> result = new ArrayList<>();
     public static List<String> scriptList = new ArrayList<>();
+    public static List<String> methodList = new ArrayList<>();
     final static String classPrefix = "public class Test {";
     final static String classSuffix = "}";
     final static String methodPrefix = "void f() {";
@@ -21,7 +22,8 @@ public class HTMLFilter {
     public static String filterScript(ParseTree tree) {
         toJson(tree, true);
         String method = String.join("\n", scriptList);
-        // method = classPrefix + method + classSuffix;
+        String definedMethod = String.join("\n", methodList);
+        method = classPrefix + methodPrefix + method + methodSuffix + definedMethod + classSuffix;
         return method;
     }
 
@@ -46,15 +48,31 @@ public class HTMLFilter {
             Token token = ((TerminalNodeImpl) tree).getSymbol();
             map.put("type", token.getType());
             map.put("text", token.getText());
-            if (token.getType() == 6 || token.getType() == 18) {
+            // if (token.getType() == 6 || token.getType() == 18) { // TODO [ ] script tag
+            // parsing error
+            if (token.getType() == 6) {
                 Boolean cond1 = token.getText().contains("<%@ page");
                 Boolean cond2 = token.getText().contains("<%@page");
-                if (!cond1 && !cond2) {
+                Boolean cond3 = token.getText().contains("<%!");
+                Boolean cond4 = token.getText().contains("<%=");
+                if (cond4) {
                     String result = token.getText()
-                        .replaceAll("<%!", "")
-                        .replaceAll("<%", "")
-                        .replaceAll("%>", "");
-                    // scriptList.add(methodPrefix + result + methodSuffix);
+                            .replaceAll("<%=", "System.out.println(")
+                            .replaceAll("%>", ");");
+                    scriptList.add(result);
+                    addResult(token);
+                }
+                if (cond3) {
+                    String result = token.getText()
+                            .replaceAll("<%!", "")
+                            .replaceAll("%>", "");
+                    methodList.add(result);
+                    addResult(token);
+                }
+                if (!cond1 && !cond2 && !cond3 && !cond4) {
+                    String result = token.getText()
+                            .replaceAll("<%", "")
+                            .replaceAll("%>", "");
                     scriptList.add(result);
                     addResult(token);
                 }
