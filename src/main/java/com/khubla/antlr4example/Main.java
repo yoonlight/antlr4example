@@ -3,6 +3,7 @@ package com.khubla.antlr4example;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.khubla.antlr4example.ast.ASPHTML;
 import com.khubla.antlr4example.ast.HTML;
 import com.khubla.antlr4example.ast.Php;
 import com.khubla.antlr4example.java.Parser;
@@ -79,6 +80,8 @@ class Main implements Runnable {
             // TODO Auto-generated catch block
             e.printStackTrace();
          }
+      } else if (lang==Lang.asp) {
+         result = ASPHTML.parse(inputStream);
       }
 
       return result;
