@@ -1,8 +1,12 @@
 package com.khubla.antlr4example;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.khubla.antlr4example.asp.ExtractFeaturesTask;
 import com.khubla.antlr4example.ast.ASPHTML;
 import com.khubla.antlr4example.ast.HTML;
 import com.khubla.antlr4example.ast.Php;
@@ -11,10 +15,6 @@ import com.khubla.antlr4example.java.Parser;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
 
 enum Lang {
    java, html, php, asp
@@ -77,11 +77,16 @@ class Main implements Runnable {
          try {
             result = Parser.parseFileWithRetries(inputStream);
          } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
          }
-      } else if (lang==Lang.asp) {
+      } else if (lang == Lang.asp) {
          result = ASPHTML.parse(inputStream);
+         ExtractFeaturesTask extractFeaturesTask = new ExtractFeaturesTask(result);
+         try {
+            extractFeaturesTask.call();
+         } catch (Exception e) {
+            e.printStackTrace();
+         }
       }
 
       return result;

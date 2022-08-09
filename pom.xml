@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.khubla.antlr4example</groupId>
 	<artifactId>antlr4example</artifactId>
@@ -31,27 +32,54 @@
 			<artifactId>picocli</artifactId>
 			<version>3.9.6</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.11</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
-            <plugin>
-                <groupId>com.coderplus.maven.plugins</groupId>
-                <artifactId>copy-rename-maven-plugin</artifactId>
-                <version>1.0</version>
-                <executions>
-                    <execution>
-                        <id>copy-file</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-							<configuration>
-								<sourceFile>src/main/antlr4/com/khubla/antlr4example/PhpLexerBase.java</sourceFile>
-								<destinationFile>target/generated-sources/antlr4/com/khubla/antlr4example/PhpLexerBase.java</destinationFile>
-							</configuration>
-                    </execution>
-                </executions>
-            </plugin>
+			<plugin>
+				<groupId>com.coderplus.maven.plugins</groupId>
+				<artifactId>copy-rename-maven-plugin</artifactId>
+				<version>1.0</version>
+				<executions>
+					<execution>
+						<id>copy-file</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<sourceFile>src/main/antlr4/com/khubla/antlr4example/PhpLexerBase.java</sourceFile>
+							<destinationFile>target/generated-sources/antlr4/com/khubla/antlr4example/PhpLexerBase.java</destinationFile>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-file-1</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<sourceFile>src/main/antlr4/com/khubla/antlr4example/CSharpLexerBase.java</sourceFile>
+							<destinationFile>target/generated-sources/antlr4/com/khubla/antlr4example/CSharpLexerBase.java</destinationFile>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-file-2</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<sourceFile>src/main/antlr4/com/khubla/antlr4example/CSharpParserBase.java</sourceFile>
+							<destinationFile>target/generated-sources/antlr4/com/khubla/antlr4example/CSharpParserBase.java</destinationFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.antlr</groupId>
 				<artifactId>antlr4-maven-plugin</artifactId>
