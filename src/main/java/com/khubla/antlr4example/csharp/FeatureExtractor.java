@@ -2,7 +2,11 @@ package com.khubla.antlr4example.csharp;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -21,6 +25,8 @@ import com.khubla.antlr4example.common.Common.MethodContent;
 import com.khubla.antlr4example.common.FeatureEntities.ProgramFeatures;
 
 public class FeatureExtractor {
+    private static Set<String> s_ignoreStrings = Stream.of("(", ")", "=", ",", ".", "&", "+", "}", ";", "{", "}", "[", "]")
+            .collect(Collectors.toCollection(HashSet::new));
 
     final static String lparen = "(";
     final static String rparen = ")";
@@ -57,6 +63,10 @@ public class FeatureExtractor {
         return methodsFeatures;
     }
 
+    private boolean isIgnoreString(String text) {
+        return s_ignoreStrings.contains(text);
+    }
+
     private ProgramFeatures generatePathFeaturesForFunction(MethodContent methodContent) {
         ArrayList<TerminalNode> functionLeaves = methodContent.getLeaves();
         ProgramFeatures programFeatures = new ProgramFeatures(methodContent.getName());
@@ -65,10 +75,9 @@ public class FeatureExtractor {
                 String separator = Common.EmptyString;
                 TerminalNode source = functionLeaves.get(i);
                 TerminalNode target = functionLeaves.get(j);
-                if (source.getText() == "(" || source.getText() == ")") {
-                    continue;
-                }
-                if (target.getText() == "(" || target.getText() == ")") {
+                String sourceText = source.getText();
+                String targetText = target.getText();
+                if (isIgnoreString(sourceText) || isIgnoreString(targetText)) {
                     continue;
                 }
                 String path = generatePath(source, target, separator);
@@ -111,10 +120,10 @@ public class FeatureExtractor {
             currentTargetAncestorIndex--;
         }
 
-        int pathLength = sourceStack.size() + targetStack.size() - 2 * commonPrefix;
-        if (pathLength > 8) {
-            return Common.EmptyString;
-        }
+        // int pathLength = sourceStack.size() + targetStack.size() - 2 * commonPrefix;
+        // if (pathLength > 8) {
+        //     return Common.EmptyString;
+        // }
 
         for (int i = 0; i < sourceStack.size() - commonPrefix; i++) {
             ParseTree currentNode = sourceStack.get(i);

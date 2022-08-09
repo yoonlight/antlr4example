@@ -1,7 +1,6 @@
 package com.khubla.antlr4example.csharp.Visitors;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -16,18 +15,11 @@ public class FunctionVisitor extends CSharpParserBaseListener {
     @Override
     public void enterMethod_declaration(Method_declarationContext node) {
         LeavesCollectorVisitor leavesCollectorVisitor = new LeavesCollectorVisitor();
-        leavesCollectorVisitor.visitMethod_declaration(node);
+        leavesCollectorVisitor.visitDepthFirst(node);
         ArrayList<TerminalNode> leaves = leavesCollectorVisitor.getLeaves();
 
-        String normalizedMethodName = Common.normalizeName(node.getText(), Common.BlankWord);
-		ArrayList<String> splitNameParts = Common.splitToSubTokens(node.getText());
-		String splitName = normalizedMethodName;
-		if (splitNameParts.size() > 0) {
-			splitName = splitNameParts.stream().collect(Collectors.joining(Common.internalSeparator));
-		}
-
         if (node.method_body() != null) {
-            m_Methods.add(new MethodContent(leaves, splitName));
+            m_Methods.add(new MethodContent(leaves, Common.methodName));
         }
     }
 
