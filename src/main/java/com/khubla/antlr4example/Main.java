@@ -35,6 +35,8 @@ class Main implements Runnable {
    private static boolean writeString;
    @Option(names = { "-l", "--lang" }, required = true)
    private static Lang lang;
+   @Option(names = { "--html" })
+   private static boolean parseHtml;
 
    public static void main(String[] args) {
       CommandLine.run(new Main(), args);
@@ -66,7 +68,7 @@ class Main implements Runnable {
       }
    }
 
-   public static String parse(InputStream inputStream) {
+   public static String parse(InputStream inputStream) throws IOException {
       String result = "";
 
       if (lang == Lang.html) {

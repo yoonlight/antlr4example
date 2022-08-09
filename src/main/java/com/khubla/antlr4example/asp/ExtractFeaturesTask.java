@@ -18,19 +18,14 @@ public class ExtractFeaturesTask implements Callable<Void> {
     }
 
     @Override
-    public Void call() throws Exception {
+    public Void call() throws IOException {
 		processFile();
         return null;
     }
 
-    public void processFile() {
+    public void processFile() throws IOException {
         ArrayList<ProgramFeatures> features;
-        try {
-            features = extractSingleFile();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
+        features = extractSingleFile();
         if (features == null) {
             return;
         }
@@ -38,6 +33,8 @@ public class ExtractFeaturesTask implements Callable<Void> {
         String toPrint = featuresToString(features);
         if (toPrint.length() > 0) {
             System.out.println(toPrint);
+        } else {
+            throw new IOException("VB Parsing Error");
         }
     }
 

@@ -25,7 +25,7 @@ import com.khubla.antlr4example.common.Common.MethodContent;
 import com.khubla.antlr4example.common.FeatureEntities.ProgramFeatures;
 
 public class FeatureExtractor {
-    private static Set<String> s_ignoreStrings = Stream.of("(", ")", "=", ",")
+    private static Set<String> s_ignoreStrings = Stream.of("(", ")", "=", ",", ".", "&", "+")
             .collect(Collectors.toCollection(HashSet::new));
 
     final static String lparen = "(";
@@ -48,7 +48,7 @@ public class FeatureExtractor {
         TokenStream tokenStream = new CommonTokenStream(lexer);
         VisualBasic6Parser parser = new VisualBasic6Parser(tokenStream);
         StartRuleContext context = parser.startRule();
-        String result = context.toStringTree(parser);
+        // String result = context.toStringTree(parser);
         return context;
     }
 
