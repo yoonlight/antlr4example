@@ -1,10 +1,7 @@
 package com.khubla.antlr4example.ast;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -17,36 +14,24 @@ import com.khubla.antlr4example.HTMLParser.HtmlDocumentContext;
 import com.khubla.antlr4example.json.ASPHTMLFilter;
 
 public class ASPHTML {
-    // https://stackoverflow.com/questions/15161553/how-to-convert-fileinputstream-into-string-in-java
-    public static String getFileContent(
-            InputStream fis,
-            String encoding) throws IOException {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(fis, encoding))) {
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-                sb.append('\n');
-            }
-            return sb.toString();
-        }
-    }
 
-    public static String parse(InputStream inputStream) {
+    public static String parse(String code) {
         String result = "";
 
         try {
-            String cleaned = getFileContent(inputStream, "utf-8")
-                .replaceAll("\"<%.*%>\"", "\"\"")
-                .replaceAll("\"<%.*%>.\"", "\"\"")
-                .replaceAll("\"<%.*%>\\\"", "\"\"")
-                .replaceAll("=<%.*%>", "")
-                .replaceAll("\"<%.*%>", "\"")
-                .replaceAll("\"<<\"", "\"\"")
-                .replaceAll("\'<%.*%>\'", "\'\'")
-                .replaceAll("\"<%=.*%>\"", "\"\"");
+            String cleaned = code
+                    .replaceAll("\"<%.*%>\"", "\"\"") // JSP
+                    .replaceAll("\"<%.*%>.\"", "\"\"")
+                    .replaceAll("\"<%.*%>\\\"", "\"\"")
+                    .replaceAll("=<%.*%>", "")
+                    .replaceAll("\"<%.*%>", "\"")
+                    .replaceAll("\"<<\"", "\"\"")
+                    .replaceAll("\'<%.*%>\'", "\'\'")
+                    .replaceAll("\"<%=.*%>\"", "\"\"")
+                    .replaceAll("End Class", "") // ASP
+                    .replaceAll("Class ", "");
             // System.out.println(cleaned);
-            inputStream = new ByteArrayInputStream(cleaned.getBytes());
+            InputStream inputStream = new ByteArrayInputStream(cleaned.getBytes());
             /*
              * make Lexer
              */

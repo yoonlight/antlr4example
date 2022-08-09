@@ -1,13 +1,17 @@
 package com.khubla.antlr4example;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
+import com.khubla.antlr4example.csharp.CSharpExtractFeaturesTask;
 import com.khubla.antlr4example.asp.ExtractFeaturesTask;
 import com.khubla.antlr4example.ast.ASPHTML;
+import com.khubla.antlr4example.ast.CsharpHTML;
 import com.khubla.antlr4example.ast.HTML;
 import com.khubla.antlr4example.ast.Php;
 import com.khubla.antlr4example.java.Parser;
@@ -70,6 +74,7 @@ class Main implements Runnable {
 
    public static String parse(InputStream inputStream) throws IOException {
       String result = "";
+      String csharpResult = "";
 
       if (lang == Lang.html) {
          result = HTML.parse(inputStream);
@@ -82,12 +87,24 @@ class Main implements Runnable {
             e.printStackTrace();
          }
       } else if (lang == Lang.asp) {
-         result = ASPHTML.parse(inputStream);
-         ExtractFeaturesTask extractFeaturesTask = new ExtractFeaturesTask(result);
+         String code = getFileContent(inputStream, "utf-8");
+         if (parseHtml) {
+            result = ASPHTML.parse(code);
+         } else {
+            result = inputStream.toString();
+         }
          try {
+            ExtractFeaturesTask extractFeaturesTask = new ExtractFeaturesTask(result);
             extractFeaturesTask.call();
          } catch (Exception e) {
             e.printStackTrace();
+            csharpResult = CsharpHTML.parse(code);
+            CSharpExtractFeaturesTask cSharpExtractFeaturesTask = new CSharpExtractFeaturesTask(csharpResult);
+            try {
+               cSharpExtractFeaturesTask.call();
+            } catch (Exception e1) {
+               e1.printStackTrace();
+            }
          }
       }
 
@@ -101,4 +118,17 @@ class Main implements Runnable {
       file.close();
    }
 
+   public static String getFileContent(
+         InputStream fis,
+         String encoding) throws IOException {
+      try (BufferedReader br = new BufferedReader(new InputStreamReader(fis, encoding))) {
+         StringBuilder sb = new StringBuilder();
+         String line;
+         while ((line = br.readLine()) != null) {
+            sb.append(line);
+            sb.append('\n');
+         }
+         return sb.toString();
+      }
+   }
 }

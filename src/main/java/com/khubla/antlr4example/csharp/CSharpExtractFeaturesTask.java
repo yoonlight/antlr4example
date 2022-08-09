@@ -10,12 +10,12 @@ import org.apache.commons.lang3.StringUtils;
 import com.khubla.antlr4example.common.Common.Common;
 import com.khubla.antlr4example.common.FeatureEntities.ProgramFeatures;
 
-public class ExtractFeaturesTask implements Callable<Void> {
+public class CSharpExtractFeaturesTask implements Callable<Void> {
     String code;
 
-    public ExtractFeaturesTask(String code) {
-		processFile();
+    public CSharpExtractFeaturesTask(String code) {
         this.code = code;
+		processFile();
     }
 
     @Override
