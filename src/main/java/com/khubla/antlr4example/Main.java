@@ -21,7 +21,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 enum Lang {
-   java, html, php, asp
+   java, html, php, asp, csharp
 }
 
 /**
@@ -105,6 +105,16 @@ class Main implements Runnable {
             } catch (Exception e1) {
                e1.printStackTrace();
             }
+         }
+      }
+
+      if (lang == Lang.csharp) {
+         String code = getFileContent(inputStream, "utf-8");
+         CSharpExtractFeaturesTask cSharpExtractFeaturesTask = new CSharpExtractFeaturesTask(code);
+         try {
+            cSharpExtractFeaturesTask.call();
+         } catch (Exception e) {
+            e.printStackTrace();
          }
       }
 
